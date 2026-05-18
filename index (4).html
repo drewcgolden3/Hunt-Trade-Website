@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hunt + Trade — Modern Consignment Boutique | Hingham, MA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <!-- Calendly widget CSS -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #faf8f4;
+      --charcoal: #1c1a18;
+      --taupe: #9b8f7e;
+      --gold: #b8924a;
+      --gold-light: #d4a96a;
+      --sage: #8a9e8c;
+      --blush: #e8d5c4;
+      --ink: #2d2820;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--warm-white);
+      color: var(--ink);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transition: transform 0.15s ease;
+    }
+    .cursor-ring {
+      width: 32px; height: 32px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transition: transform 0.35s ease, width 0.2s, height 0.2s;
+      transform: translate(-12px, -12px);
+    }
+    body:hover .cursor-ring.hovering { width: 48px; height: 48px; border-color: var(--gold-light); }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 60px;
+      transition: background 0.4s, padding 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(250,248,244,0.95);
+      backdrop-filter: blur(8px);
+      padding: 18px 60px;
+      box-shadow: 0 1px 0 rgba(155,143,126,0.15);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--charcoal); text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--charcoal);
+      text-decoration: none; font-weight: 400;
+      position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px; background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      position: relative; overflow: hidden;
+    }
+    .hero-left {
+      background: var(--charcoal);
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 80px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero-left::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(184,146,74,0.12) 0%, transparent 60%);
+    }
+    .hero-texture {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-eyebrow {
+      font-size: 10px; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 24px; opacity: 0;
+      animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 6vw, 80px);
+      font-weight: 300; line-height: 1.05;
+      color: var(--cream); margin-bottom: 32px;
+      opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-desc {
+      font-size: 13px; line-height: 1.9;
+      color: rgba(245,240,232,0.55);
+      max-width: 360px; letter-spacing: 0.03em;
+      opacity: 0; animation: fadeUp 0.9s ease 0.7s forwards;
+    }
+    .hero-right {
+      position: relative; overflow: hidden;
+    }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+    }
+    .hero-right-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(28,26,24,0.3) 0%, transparent 40%);
+    }
+    .hero-badge {
+      position: absolute; bottom: 60px; right: 60px;
+      width: 120px; height: 120px;
+      border: 1px solid rgba(184,146,74,0.5);
+      border-radius: 50%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      animation: spin 20s linear infinite;
+    }
+    .hero-badge-text {
+      font-size: 8px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+      animation: spin 20s linear infinite reverse;
+      line-height: 1.6;
+    }
+    .scroll-cue {
+      position: absolute; bottom: 40px; left: 60px;
+      display: flex; align-items: center; gap: 12px;
+      opacity: 0; animation: fadeIn 1s ease 1.2s forwards;
+    }
+    .scroll-line {
+      width: 40px; height: 1px;
+      background: rgba(245,240,232,0.3);
+      position: relative; overflow: hidden;
+    }
+    .scroll-line::after {
+      content: ''; position: absolute; left: -100%; top: 0;
+      width: 100%; height: 100%; background: var(--gold);
+      animation: slide 1.8s ease infinite;
+    }
+    .scroll-text {
+      font-size: 9px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: rgba(245,240,232,0.4);
+    }
+
+    /* Ticker */
+    .ticker {
+      background: var(--gold); padding: 14px 0;
+      overflow: hidden; white-space: nowrap;
+    }
+    .ticker-inner { display: inline-flex; animation: ticker 22s linear infinite; }
+    .ticker-item {
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--charcoal);
+      padding: 0 40px; font-weight: 500;
+    }
+    .ticker-dot { color: rgba(28,26,24,0.4); }
+
+    /* Section shared */
+    section { padding: 120px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+    .section-label {
+      font-size: 9px; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+    }
+
+    /* About */
+    .about { background: var(--warm-white); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .about-visual {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .about-visual img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .about-visual-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(28,26,24,0.75) 0%, transparent 100%);
+      padding: 40px 32px 28px;
+    }
+    .about-caption-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 400;
+      color: var(--cream); letter-spacing: 0.05em;
+    }
+    .about-caption-title {
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+      margin-top: 4px;
+    }
+    .about-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 3.5vw, 52px);
+      font-weight: 400; line-height: 1.2;
+      margin-bottom: 24px; color: var(--charcoal);
+    }
+    .about-heading em { font-style: italic; color: var(--gold); }
+    .about-body {
+      font-size: 14px; line-height: 2;
+      color: var(--taupe); letter-spacing: 0.02em; margin-bottom: 20px;
+    }
+    .about-stats {
+      display: flex; gap: 40px; margin-top: 40px;
+      padding-top: 40px; border-top: 1px solid var(--blush);
+    }
+    .about-stat-item { display: flex; flex-direction: column; gap: 4px; }
+    .about-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 300;
+      color: var(--charcoal); line-height: 1;
+    }
+    .about-stat-label {
+      font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--taupe);
+    }
+
+    /* In-Store Gallery */
+    .gallery { background: var(--charcoal); padding: 120px 0; }
+    .gallery-header { text-align: center; margin-bottom: 20px; }
+    .gallery-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 4vw, 60px);
+      font-weight: 300; color: var(--cream); line-height: 1.1;
+    }
+    .gallery-heading em { font-style: italic; color: var(--gold-light); }
+    .gallery-sub {
+      font-size: 13px; letter-spacing: 0.05em;
+      color: rgba(245,240,232,0.45); margin-top: 16px;
+      margin-bottom: 60px;
+    }
+
+    /* Masonry grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 0 60px;
+    }
+    .gallery-item {
+      position: relative; overflow: hidden;
+      background: rgba(255,255,255,0.03);
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,26,24,0.65) 0%, transparent 50%);
+      opacity: 0; transition: opacity 0.4s ease;
+      display: flex; align-items: flex-end; padding: 24px;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-label {
+      font-size: 9px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item { aspect-ratio: 1 / 1; }
+    .gallery-item.tall { aspect-ratio: auto; }
+
+    /* Brands */
+    .brands { background: var(--cream); padding: 80px 0; }
+    .brands-header { text-align: center; margin-bottom: 48px; }
+    .brands-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 2.8vw, 42px);
+      font-weight: 400; color: var(--charcoal);
+    }
+    .brands-heading em { font-style: italic; color: var(--gold); }
+    .brands-sub {
+      font-size: 12px; letter-spacing: 0.08em;
+      color: var(--taupe); margin-top: 12px;
+    }
+    .brands-grid {
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 12px 20px;
+      padding: 0 60px;
+    }
+    .brand-pill {
+      display: inline-block;
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase; font-weight: 500;
+      color: var(--charcoal);
+      border: 1px solid rgba(155,143,126,0.35);
+      padding: 12px 28px;
+      background: var(--warm-white);
+      transition: all 0.25s;
+    }
+    .brand-pill:hover {
+      background: var(--charcoal);
+      color: var(--cream);
+      border-color: var(--charcoal);
+    }
+    .brand-pill.highlight {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .brand-pill.highlight:hover {
+      background: var(--gold);
+      color: var(--charcoal);
+    }
+
+    /* How It Works */
+    .how { background: var(--charcoal); }
+    .how-header { text-align: center; margin-bottom: 80px; }
+    .how-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 4vw, 60px);
+      font-weight: 300; color: var(--cream); line-height: 1.1;
+    }
+    .how-heading em { font-style: italic; color: var(--gold-light); }
+    .how-appt-note {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(184,146,74,0.12);
+      border: 1px solid rgba(184,146,74,0.3);
+      padding: 14px 28px; margin-top: 32px;
+      font-size: 11px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .how-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .how-step {
+      background: rgba(255,255,255,0.03);
+      padding: 52px 40px;
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.3s;
+    }
+    .how-step:hover { background: rgba(184,146,74,0.07); }
+    .how-step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px; font-weight: 300;
+      color: rgba(184,146,74,0.15); line-height: 1; margin-bottom: 24px;
+    }
+    .how-step-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 400;
+      color: var(--cream); margin-bottom: 16px;
+    }
+    .how-step-body {
+      font-size: 13px; line-height: 1.8;
+      color: rgba(245,240,232,0.45); letter-spacing: 0.02em;
+    }
+    .how-step-tag {
+      display: inline-block; margin-top: 24px;
+      font-size: 9px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid rgba(184,146,74,0.3); padding: 6px 14px;
+    }
+
+    /* Consignment CTA */
+    .consign-cta {
+      background: var(--warm-white);
+      padding: 100px 60px;
+      text-align: center;
+      border-top: 1px solid var(--blush);
+    }
+    .consign-cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 3.5vw, 52px);
+      font-weight: 300; color: var(--charcoal);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .consign-cta-heading em { font-style: italic; color: var(--gold); }
+    .consign-cta-sub {
+      font-size: 13px; letter-spacing: 0.05em;
+      color: var(--taupe); max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.9;
+    }
+    .appt-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--charcoal);
+      color: var(--cream);
+      font-size: 9px; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 8px 20px; margin-bottom: 32px;
+    }
+    .appt-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 1.5s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.4); }
+    }
+    .btn-calendly {
+      display: inline-block;
+      font-family: 'Jost', sans-serif;
+      font-size: 10px; letter-spacing: 0.3em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 20px 52px;
+      background: var(--gold); color: var(--charcoal);
+      font-weight: 500;
+      transition: all 0.3s; cursor: none;
+    }
+    .btn-calendly:hover {
+      background: var(--charcoal);
+      color: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    /* Consignment Info Banner */
+    .consign-banner {
+      background: var(--cream); padding: 80px 60px;
+      display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 40px; align-items: center;
+    }
+    .consign-info { display: flex; flex-direction: column; gap: 8px; }
+    .consign-label {
+      font-size: 9px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--taupe);
+    }
+    .consign-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 400; color: var(--charcoal);
+    }
+    .consign-sub { font-size: 12px; letter-spacing: 0.05em; color: var(--taupe); }
+    .consign-divider { width: 1px; height: 80px; background: var(--blush); }
+
+    /* Features */
+    .features { background: var(--warm-white); }
+    .features-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; margin-bottom: 80px;
+    }
+    .features-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 3.8vw, 56px);
+      font-weight: 400; line-height: 1.1; color: var(--charcoal);
+    }
+    .features-heading em { font-style: italic; color: var(--gold); }
+    .features-intro { font-size: 14px; line-height: 2; color: var(--taupe); padding-top: 12px; }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--blush);
+    }
+    .feature-item {
+      background: var(--warm-white); padding: 52px 48px;
+      position: relative; overflow: hidden; transition: background 0.3s;
+    }
+    .feature-item:hover { background: var(--cream); }
+    .feature-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--blush);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 28px; color: var(--gold); font-size: 18px;
+    }
+    .feature-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 500;
+      color: var(--charcoal); margin-bottom: 14px;
+    }
+    .feature-body { font-size: 13px; line-height: 1.85; color: var(--taupe); }
+
+    /* Review */
+    .review-section {
+      background: var(--charcoal); padding: 120px 0;
+      position: relative; overflow: hidden;
+    }
+    .review-section::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 500px; color: rgba(184,146,74,0.05);
+      position: absolute; top: -120px; left: -40px; line-height: 1;
+    }
+    .review-inner {
+      max-width: 800px; margin: 0 auto;
+      padding: 0 60px; text-align: center;
+    }
+    .review-stars { display: flex; justify-content: center; gap: 6px; margin-bottom: 40px; }
+    .star { color: var(--gold); font-size: 20px; }
+    .review-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 300; font-style: italic;
+      line-height: 1.5; color: var(--cream); margin-bottom: 48px;
+    }
+    .review-author {
+      font-size: 11px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .review-author span { color: rgba(245,240,232,0.35); margin-left: 16px; }
+
+    /* Location */
+    .location { background: var(--cream); }
+    .location-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    .location-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 3.5vw, 52px);
+      font-weight: 400; line-height: 1.15;
+      color: var(--charcoal); margin-bottom: 32px;
+    }
+    .location-heading em { font-style: italic; color: var(--gold); }
+    .location-details { display: flex; flex-direction: column; gap: 28px; }
+    .location-item { display: flex; gap: 20px; align-items: flex-start; }
+    .location-item-icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--blush);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--gold); font-size: 14px;
+    }
+    .location-item-label {
+      font-size: 9px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--taupe); margin-bottom: 4px;
+    }
+    .location-item-value { font-size: 14px; color: var(--charcoal); line-height: 1.6; }
+    .location-map {
+      background: var(--charcoal); height: 400px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .map-placeholder { text-align: center; }
+    .map-pin { font-size: 48px; margin-bottom: 16px; animation: bounce 2s ease infinite; }
+    .map-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 300;
+      color: var(--cream); margin-bottom: 8px;
+    }
+    .map-sub {
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--taupe);
+    }
+    .map-link {
+      display: inline-block; margin-top: 24px;
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(184,146,74,0.3);
+      padding-bottom: 2px; transition: border-color 0.3s;
+    }
+    .map-link:hover { border-color: var(--gold); }
+
+    /* CTA */
+    .cta { background: var(--gold); padding: 100px 60px; text-align: center; }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 4.5vw, 64px);
+      font-weight: 300; color: var(--charcoal);
+      margin-bottom: 20px; line-height: 1.1;
+    }
+    .cta-heading em { font-style: italic; }
+    .cta-sub {
+      font-size: 13px; letter-spacing: 0.08em;
+      color: rgba(28,26,24,0.6); margin-bottom: 48px;
+    }
+    .cta-buttons {
+      display: flex; gap: 16px;
+      justify-content: center; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      font-size: 10px; letter-spacing: 0.25em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 18px 44px; transition: all 0.3s;
+      font-family: 'Jost', sans-serif; font-weight: 400; cursor: none;
+    }
+    .btn-dark { background: var(--charcoal); color: var(--cream); }
+    .btn-dark:hover { background: var(--ink); transform: translateY(-2px); }
+    .btn-outline { border: 1px solid var(--charcoal); color: var(--charcoal); background: transparent; }
+    .btn-outline:hover { background: var(--charcoal); color: var(--cream); }
+
+    /* Footer */
+    footer { background: var(--charcoal); padding: 80px 60px 40px; }
+    .footer-top {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 60px; padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 40px;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 400;
+      letter-spacing: 0.1em; color: var(--cream);
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .footer-brand span { color: var(--gold); }
+    .footer-tagline { font-size: 12px; line-height: 1.8; color: rgba(245,240,232,0.4); max-width: 260px; }
+    .footer-col-heading {
+      font-size: 9px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      font-size: 13px; color: rgba(245,240,232,0.45);
+      text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--cream); }
+    .footer-social { display: flex; gap: 12px; margin-top: 32px; }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; color: rgba(245,240,232,0.45);
+      font-size: 14px; transition: all 0.2s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 11px; letter-spacing: 0.08em; color: rgba(245,240,232,0.2); }
+    .footer-copy span { color: var(--gold); }
+
+    /* Animations */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slide { 0% { left: -100%; } 100% { left: 100%; } }
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* Mobile */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none;
+    }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--charcoal); transition: all 0.3s; }
+
+    @media (max-width: 900px) {
+      nav { padding: 20px 30px; }
+      nav.scrolled { padding: 14px 30px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; height: auto; }
+      .hero-left { padding: 120px 30px 60px; min-height: 70vh; }
+      .hero-right { height: 50vw; }
+      .about-grid, .features-header, .location-grid, .footer-top { grid-template-columns: 1fr; gap: 40px; }
+      .how-steps { grid-template-columns: 1fr 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .consign-banner { grid-template-columns: 1fr; gap: 30px; }
+      .consign-divider { display: none; }
+      .container { padding: 0 30px; }
+      section { padding: 80px 0; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; padding: 0 30px; }
+      .brands-grid { padding: 0 30px; }
+      body, .cursor, .cursor-ring { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      .btn-calendly { cursor: pointer; }
+      .btn { cursor: pointer; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Nav -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">Hunt <span>+</span> Trade</a>
+    <ul class="nav-links">
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#shop">In Store</a></li>
+      <li><a href="#how">Consign</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <div class="hero-texture"></div>
+      <p class="hero-eyebrow">Hingham Square · South Shore, MA</p>
+      <h1 class="hero-title">
+        Modern<br>
+        Consignment,<br>
+        <em>Elevated.</em>
+      </h1>
+      <p class="hero-desc">
+        A trusted community of sellers and buyers making Hunt + Trade the premier destination for high-end resale on the South Shore. Great brands. Great prices. Curated with love.
+      </p>
+      <div class="scroll-cue">
+        <div class="scroll-line"></div>
+        <span class="scroll-text">Discover more</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="images/Screenshot_2026-05-18_at_3_11_19_PM.png" alt="Hunt + Trade boutique storefront with owner Sree Lenhart, Hingham Square MA" />
+      <div class="hero-right-overlay"></div>
+      <div class="hero-badge">
+        <div class="hero-badge-text">South Shore · Premier · Resale ·&nbsp;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ticker-item">By Appointment Only</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">High-End Resale</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Hingham Square</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Designer · Contemporary · Vintage</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Trusted Community</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">By Appointment Only</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">High-End Resale</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Hingham Square</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Designer · Contemporary · Vintage</span>
+      <span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Trusted Community</span>
+      <span class="ticker-item ticker-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- About / Our Story -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <img src="images/Screenshot_2026-05-18_at_3_11_19_PM.png" alt="Sree Lenhart, founder of Hunt + Trade, outside the Hingham boutique" />
+          <div class="about-visual-caption">
+            <div class="about-caption-name">Sree Lenhart</div>
+            <div class="about-caption-title">Founder &amp; Owner · Hunt + Trade</div>
+          </div>
+        </div>
+        <div>
+          <p class="section-label reveal">Our Story</p>
+          <h2 class="about-heading reveal reveal-delay-1">
+            Where <em>luxury resale</em><br>meets community.
+          </h2>
+          <p class="about-body reveal reveal-delay-2">
+            Hunt + Trade was born from Sree Lenhart's love of "the hunt" and great style. Her goal from day one: elevate the consignment experience by curating a trusted community of buyers and sellers right here in Hingham Square.
+          </p>
+          <p class="about-body reveal reveal-delay-2">
+            H+T's welcoming boutique environment offers great brands at great prices — and it's better for the planet. Stroll through Hingham Square, stop for a coffee, then drop off or discover something beautiful. That's the H+T experience.
+          </p>
+          <p class="about-body reveal reveal-delay-2">
+            Located at 60 South Street, Hunt + Trade has become a premier South Shore destination for high-end resale since 2019.
+          </p>
+          <div class="about-stats reveal reveal-delay-3">
+            <div class="about-stat-item">
+              <span class="about-stat-num">2019</span>
+              <span class="about-stat-label">Est. Hingham Square</span>
+            </div>
+            <div class="about-stat-item">
+              <span class="about-stat-num">5★</span>
+              <span class="about-stat-label">Community Rating</span>
+            </div>
+            <div class="about-stat-item">
+              <span class="about-stat-num">100+</span>
+              <span class="about-stat-label">Brands Carried</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Have In Store -->
+  <section class="gallery" id="shop">
+    <div class="container" style="padding: 0 60px;">
+      <div class="gallery-header reveal">
+        <p class="section-label" style="color: var(--gold);">What We Have In Store</p>
+        <h2 class="gallery-heading">Curated finds,<br><em>ready to discover.</em></h2>
+        <p class="gallery-sub">From designer handbags to vibrant printed dresses — there's always something new on our floor.</p>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item tall reveal">
+        <img src="images/Screenshot_2026-05-18_at_3_16_28_PM.png" alt="Louis Vuitton handbag and Adidas sneakers at Hunt + Trade" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Designer Bags &amp; Sneakers</span>
+        </div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-1">
+        <img src="images/Screenshot_2026-05-18_at_3_16_57_PM.png" alt="Gucci bag, Burberry scarf and espadrilles at Hunt + Trade" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Accessories &amp; Scarves</span>
+        </div>
+      </div>
+      <div class="gallery-item reveal reveal-delay-2">
+        <img src="images/Screenshot_2026-05-18_at_3_18_01_PM.png" alt="Colorful printed dresses on rack at Hunt + Trade" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-label">Statement Dresses</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands We Carry -->
+  <section class="brands">
+    <div class="container">
+      <div class="brands-header reveal">
+        <p class="section-label">Brands We Carry</p>
+        <h2 class="brands-heading">Recognizable names,<br><em>remarkable prices.</em></h2>
+        <p class="brands-sub">A rotating selection of the world's most coveted labels — curated, authenticated, and ready to wear.</p>
+      </div>
+      <div class="brands-grid reveal reveal-delay-1">
+        <span class="brand-pill highlight">Louis Vuitton</span>
+        <span class="brand-pill highlight">Gucci</span>
+        <span class="brand-pill highlight">Coach</span>
+        <span class="brand-pill highlight">Burberry</span>
+        <span class="brand-pill">Adidas</span>
+        <span class="brand-pill">Tory Burch</span>
+        <span class="brand-pill">Free People</span>
+        <span class="brand-pill">Lululemon</span>
+        <span class="brand-pill">Kate Spade</span>
+        <span class="brand-pill">Michael Kors</span>
+        <span class="brand-pill">Theory</span>
+        <span class="brand-pill">J.Crew</span>
+        <span class="brand-pill">Anthropologie</span>
+        <span class="brand-pill">Madewell</span>
+        <span class="brand-pill">Vince</span>
+        <span class="brand-pill">Rag &amp; Bone</span>
+        <span class="brand-pill">Marc Jacobs</span>
+        <span class="brand-pill">Ralph Lauren</span>
+        <span class="brand-pill">Ted Baker</span>
+        <span class="brand-pill">& Many More</span>
+      </div>
+      <p style="text-align:center; font-size:11px; letter-spacing:0.15em; color:var(--taupe); margin-top: 32px;" class="reveal reveal-delay-2">
+        Inventory changes weekly — follow <a href="https://www.instagram.com/huntandtrade/" target="_blank" style="color:var(--gold); text-decoration:none;">@huntandtrade</a> for the latest finds
+      </p>
+    </div>
+  </section>
+
+  <!-- How It Works / Consign -->
+  <section class="how" id="how">
+    <div class="container">
+      <div class="how-header reveal">
+        <p class="section-label" style="color: var(--gold);">How It Works</p>
+        <h2 class="how-heading">Consigning has<br>never been <em>simpler.</em></h2>
+        <div class="how-appt-note">
+          <span>📅</span> Consignment is by appointment only
+        </div>
+      </div>
+      <div class="how-steps">
+        <div class="how-step reveal">
+          <div class="how-step-num">01</div>
+          <div class="how-step-title">Book an Appointment</div>
+          <p class="how-step-body">Schedule your consignment drop-off using our Calendly link. Appointments ensure you get our full attention and the best experience.</p>
+          <span class="how-step-tag">By Appointment Only</span>
+        </div>
+        <div class="how-step reveal reveal-delay-1">
+          <div class="how-step-num">02</div>
+          <div class="how-step-title">Bring It In</div>
+          <p class="how-step-body">Bring your high-end pieces to our Hingham Square boutique at your scheduled time. We love designer, contemporary, and vintage finds.</p>
+          <span class="how-step-tag">60 South Street</span>
+        </div>
+        <div class="how-step reveal reveal-delay-2">
+          <div class="how-step-num">03</div>
+          <div class="how-step-title">We List &amp; Sell</div>
+          <p class="how-step-body">Your items are beautifully displayed in our boutique and shown to our community of discerning South Shore buyers.</p>
+          <span class="how-step-tag">Boutique Display</span>
+        </div>
+        <div class="how-step reveal reveal-delay-3">
+          <div class="how-step-num">04</div>
+          <div class="how-step-title">You Get Paid</div>
+          <p class="how-step-body">Once your item sells, you receive your share. Transparent, simple, and rewarding — the H+T way.</p>
+          <span class="how-step-tag">Simple Payout</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Consignment Booking CTA -->
+  <div class="consign-cta">
+    <div class="appt-badge reveal">
+      <span class="appt-dot"></span>
+      Consignment is by appointment only
+    </div>
+    <h2 class="consign-cta-heading reveal reveal-delay-1">
+      Ready to <em>consign</em><br>your next piece?
+    </h2>
+    <p class="consign-cta-sub reveal reveal-delay-2">
+      Schedule your appointment with Sree and the team directly. We'll make sure your visit is seamless, personalized, and worth every second.
+    </p>
+    <div class="reveal reveal-delay-3">
+      <a href="https://calendly.com/sree-kastury/new-meeting?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGnHN1bl85XH_6v92WEC1mnEDnEE_QT8V94LtBMCyb7cO1PknRtH6J-LGX4biA_aem_TdBF4ylaw7ges9MT2snpvQ&utm_id=97760_v0_s00_e0_tv3&month=2026-05&date=2026-05-26"
+         target="_blank"
+         class="btn-calendly"
+         onclick="Calendly.initPopupWidget({url:'https://calendly.com/sree-kastury/new-meeting'}); return false;">
+        Book Your Appointment →
+      </a>
+    </div>
+  </div>
+
+  <!-- Consign Banner -->
+  <div class="consign-banner">
+    <div class="consign-info reveal">
+      <span class="consign-label">Store Hours</span>
+      <span class="consign-value">Wed–Sat</span>
+      <span class="consign-sub">Wed, Fri, Sat: 10:30–5 · Thu: 10:30–3</span>
+    </div>
+    <div class="consign-divider"></div>
+    <div class="consign-info reveal reveal-delay-1">
+      <span class="consign-label">We Accept</span>
+      <span class="consign-value">High-End Pieces</span>
+      <span class="consign-sub">Designer, contemporary &amp; vintage</span>
+    </div>
+    <div class="consign-divider"></div>
+    <div class="consign-info reveal reveal-delay-2">
+      <span class="consign-label">Location</span>
+      <span class="consign-value">Hingham Square</span>
+      <span class="consign-sub">60 South Street, Hingham, MA</span>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <div class="features-header">
+        <div>
+          <p class="section-label reveal">Why Hunt + Trade</p>
+          <h2 class="features-heading reveal reveal-delay-1">
+            The <em>elevated</em><br>resale experience.
+          </h2>
+        </div>
+        <p class="features-intro reveal reveal-delay-2">
+          From our curated boutique floor to our trusted community of shoppers, every detail of the Hunt + Trade experience is designed to set us apart from ordinary consignment.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-item reveal">
+          <div class="feature-icon">✦</div>
+          <div class="feature-title">Boutique Environment</div>
+          <p class="feature-body">A carefully designed, welcoming space that feels nothing like a thrift store — because it isn't one.</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-1">
+          <div class="feature-icon">◈</div>
+          <div class="feature-title">High-End Curation</div>
+          <p class="feature-body">Every piece on our floor meets our quality standard. Shoppers come knowing they'll find something worth finding.</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-2">
+          <div class="feature-icon">⬡</div>
+          <div class="feature-title">Trusted Community</div>
+          <p class="feature-body">Years of building relationships with South Shore buyers and sellers have made H+T a true community institution.</p>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon">◎</div>
+          <div class="feature-title">Appointment-Based</div>
+          <p class="feature-body">Consignment by appointment ensures you get our full attention. Book your slot and we handle the rest with care.</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-1">
+          <div class="feature-icon">△</div>
+          <div class="feature-title">Premier South Shore Destination</div>
+          <p class="feature-body">Right in the heart of Hingham Square — visit us as part of a perfect day out in one of New England's most charming towns.</p>
+        </div>
+        <div class="feature-item reveal reveal-delay-2">
+          <div class="feature-icon">◇</div>
+          <div class="feature-title">Sustainable Fashion</div>
+          <p class="feature-body">Giving beautiful clothes a second life is both smart and responsible. Shop and sell with intention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Review -->
+  <section class="review-section">
+    <div class="review-inner">
+      <div class="review-stars reveal">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <blockquote class="review-text reveal reveal-delay-1">
+        "Nice consignment shop for pretty dresses. Take a walk through Hingham Square, stop for a coffee, a drink, or a bite to eat somewhere, then drop off or pick up a pretty dress at this fine shop."
+      </blockquote>
+      <p class="review-author reveal reveal-delay-2">
+        Astral Traveler <span>· Local Guide · Google Reviews</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Location -->
+  <section class="location" id="visit">
+    <div class="container">
+      <div class="location-grid">
+        <div>
+          <p class="section-label reveal">Find Us</p>
+          <h2 class="location-heading reveal reveal-delay-1">
+            In the heart of<br><em>Hingham Square.</em>
+          </h2>
+          <div class="location-details">
+            <div class="location-item reveal reveal-delay-2">
+              <div class="location-item-icon">📍</div>
+              <div>
+                <div class="location-item-label">Address</div>
+                <div class="location-item-value">60 South Street<br>Hingham Square, MA 02043</div>
+              </div>
+            </div>
+            <div class="location-item reveal reveal-delay-2">
+              <div class="location-item-icon">⏰</div>
+              <div>
+                <div class="location-item-label">Store Hours</div>
+                <div class="location-item-value">Wed, Fri &amp; Sat: 10:30 AM – 5:00 PM<br>Thursday: 10:30 AM – 3:00 PM</div>
+              </div>
+            </div>
+            <div class="location-item reveal reveal-delay-2">
+              <div class="location-item-icon">📅</div>
+              <div>
+                <div class="location-item-label">Consignment</div>
+                <div class="location-item-value">
+                  By appointment only<br>
+                  <a href="https://calendly.com/sree-kastury/new-meeting" target="_blank" style="color:var(--gold); text-decoration:none;">Book your appointment →</a>
+                </div>
+              </div>
+            </div>
+            <div class="location-item reveal reveal-delay-2">
+              <div class="location-item-icon">📞</div>
+              <div>
+                <div class="location-item-label">Contact</div>
+                <div class="location-item-value">
+                  <a href="tel:+19732145074" style="color:var(--charcoal); text-decoration:none;">(973) 214-5074</a><br>
+                  <a href="mailto:sree@hunt-trade.com" style="color:var(--gold); text-decoration:none;">sree@hunt-trade.com</a>
+                </div>
+              </div>
+            </div>
+            <div class="location-item reveal reveal-delay-3">
+              <div class="location-item-icon">📱</div>
+              <div>
+                <div class="location-item-label">Follow Along</div>
+                <div class="location-item-value">
+                  <a href="https://www.instagram.com/huntandtrade/" target="_blank" style="color:var(--gold); text-decoration:none;">@huntandtrade</a> on Instagram<br>
+                  <a href="https://www.facebook.com/hunt.and.trade/" target="_blank" style="color:var(--gold); text-decoration:none;">hunt.and.trade</a> on Facebook
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="location-map reveal reveal-delay-1">
+          <div class="map-placeholder">
+            <div class="map-pin">📍</div>
+            <div class="map-text">60 South Street</div>
+            <div class="map-sub">Hingham Square, MA 02043</div>
+            <a href="https://maps.google.com/?q=60+South+Street+Hingham+MA" target="_blank" class="map-link">Open in Google Maps →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta">
+    <p class="section-label" style="color: rgba(28,26,24,0.5);">Ready?</p>
+    <h2 class="cta-heading reveal">
+      Come <em>hunt.</em><br>Come <em>trade.</em>
+    </h2>
+    <p class="cta-sub reveal reveal-delay-1">Visit us in Hingham Square or book your consignment appointment today.</p>
+    <div class="cta-buttons reveal reveal-delay-2">
+      <a href="https://calendly.com/sree-kastury/new-meeting" target="_blank" class="btn btn-dark">Book Appointment</a>
+      <a href="https://www.instagram.com/huntandtrade/" target="_blank" class="btn btn-outline">Instagram</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Hunt <span>+</span> Trade</div>
+        <p class="footer-tagline">Modern Consignment Boutique · 60 South Street, Hingham Square, MA · Elevating the resale experience on the South Shore since 2019.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/huntandtrade/" target="_blank" class="social-link" aria-label="Instagram">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/hunt.and.trade/" target="_blank" class="social-link" aria-label="Facebook">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <p class="footer-col-heading">Quick Links</p>
+        <ul class="footer-links">
+          <li><a href="#about">Our Story</a></li>
+          <li><a href="#shop">In Store</a></li>
+          <li><a href="#how">Consign</a></li>
+          <li><a href="#visit">Visit</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-heading">Visit &amp; Contact</p>
+        <ul class="footer-links">
+          <li><a href="https://maps.google.com/?q=60+South+Street+Hingham+MA" target="_blank">60 South St, Hingham, MA</a></li>
+          <li><a href="#">Wed &amp; Fri–Sat: 10:30–5 · Thu: 10:30–3</a></li>
+          <li><a href="https://calendly.com/sree-kastury/new-meeting" target="_blank">Book Consignment Appt</a></li>
+          <li><a href="tel:+19732145074">(973) 214-5074</a></li>
+          <li><a href="mailto:sree@hunt-trade.com">sree@hunt-trade.com</a></li>
+          <li><a href="https://www.instagram.com/huntandtrade/" target="_blank">@huntandtrade</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 <span>Hunt + Trade</span> Modern Consignment Boutique · Hingham, MA</p>
+      <p class="footer-copy">60 South Street · Hingham Square</p>
+    </div>
+  </footer>
+
+  <!-- Calendly popup widget script -->
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+    });
+    function animateRing() {
+      rx += (mx - rx - 16) * 0.12;
+      ry += (my - ry - 16) * 0.12;
+      ring.style.transform = `translate(${rx}px, ${ry}px)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+    });
+
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
